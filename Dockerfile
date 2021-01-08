@@ -1,8 +1,8 @@
-FROM python:3.7.4-buster
+FROM python:3.9.0-buster
 
-WORKDIR /app
+WORKDIR /application
 
-ADD . /app
+ADD . /application
 
 RUN pip install --upgrade . && python setup.py build
 

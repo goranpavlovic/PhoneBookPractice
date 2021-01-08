@@ -12,7 +12,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - 5000:5000
+      - 10091:5000
     command: >
       python -m server.main
 
@@ -21,13 +21,13 @@ services:
     container_name: phonebook-postgres
     image: postgres:11-alpine
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres_u
+      - POSTGRES_DB=postgres_db
+      - POSTGRES_PASSWORD=postgres_p
     #volumes:
     #  - ./../cities.db:/cities.db
     ports:
-      - 5432:5432
+      - 10090:5432
     command:
       postgres
       -c logging_collector=on
