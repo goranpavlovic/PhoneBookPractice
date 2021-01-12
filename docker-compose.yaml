@@ -8,7 +8,7 @@ services:
     build: .
     image: phonebook:latest
     volumes:
-      - ./:/app
+      - ./:/application
     depends_on:
       - postgres
     ports:

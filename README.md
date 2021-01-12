@@ -18,4 +18,8 @@ docker-compose run api yoyo     # Run concrete program (yoyo) on service api
 docker-compose run api yoyo new ./.migrations -m "Create entry"         # create first migration when do not have yoyo.ini 
 docker-compose run api yoyo new -m "Create entry"                       # For every next migration because we have yoy.ini file, do not required to specify migration path
 docker-compose run api yoyo apply --database postgresql://postgres_u:postgres_p@postgres:5432/postgres_db ./.migrations
+
+# To be able to run tests type following command
+docker-compose run api pytest
+
 ```
