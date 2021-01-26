@@ -20,4 +20,4 @@ def health_check():
     print("Query executed correctly!!!")
     cursor.close()
     connection.close()
-    return make_response(jsonify({'status': 'Hello I am alive! Postgres is alive too in version: {row[0]}!!!'}), 200)
+    return make_response(jsonify({'status': f'Hello I am alive! Postgres is alive too in version: {row[0]}!!!'}), 200)
