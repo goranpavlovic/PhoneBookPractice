@@ -1,15 +1,28 @@
 from typing import List, Any
 from server.dao import Dao
+from datetime import datetime
+from typing import List, Optional
+from pydantic import BaseModel
+
+
+class Entry(BaseModel):
+    id: Optional[int] = None
+    name: str
+    surname: str
+
+    @staticmethod
+    def create(id, name, surname):
+        return Entry(id=id, name=name, surname=surname)
 
 
 class EntryDao(Dao):
 
     TABLE_NAME = 'entry'
 
-    def list(self, offset: int = 0, limit: int = 10) -> List[Any]:
+    def list(self, offset: int = 0, limit: int = 10) -> List[Entry]:
         cursor = self.create_cursor()
         sql = f"""
-            SELECT * 
+            SELECT id, "firstName", "lastName" 
             FROM {self.TABLE_NAME}
             OFFSET %s LIMIT %s
         """
@@ -18,7 +31,7 @@ class EntryDao(Dao):
         results = []
         row = cursor.fetchone()
         while row is not None:
-            results.append(row)
+            results.append(Entry.create(*row))
             row = cursor.fetchone()
             print(row)
         return results
@@ -34,7 +47,7 @@ class EntryDao(Dao):
         cursor.execute(sql, params)
         return cursor.fetchone()
 
-    def create(self, name: str, surname: str) -> Any:
+    def create(self, entry: Entry) -> Entry:
         connection = self.create_connection()
         cursor = connection.cursor()
         sql = f"""
@@ -44,12 +57,11 @@ class EntryDao(Dao):
             (%s, %s)
             returning id, "firstName", "lastName"
         """
-        params = name, surname
+        params = entry.name, entry.surname
         cursor.execute(sql, params)
         row = cursor.fetchone()
         connection.commit()
-        print(row)
-        return row
+        return Entry.create(*row)
 
     def update(self, object_id: str, **kwargs):
         connection = self.create_connection()

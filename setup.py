@@ -18,6 +18,7 @@ setup(
         "spectree==0.3.6",
         "psycopg2==2.8.6",
         "yoyo-migrations==7.2.1",
-        "pytest-flask==1.1.0"
+        "pytest-flask==1.1.0",
+        "pydantic==1.8"
     ]
 )
